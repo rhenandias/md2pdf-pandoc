@@ -20,33 +20,45 @@ sudo apt-get install pandoc texlive-latex-base texlive-fonts-recommended texlive
 
 Observação: neste projeto, o PDF é gerado com `pandoc + google-chrome --headless` (não depende do LaTeX para o fluxo principal), mas manter os pacotes TeX instalados pode ser útil para fallback.
 
+## Estrutura de Diretórios
+
+- `workspace/`: Diretório de trabalho (ignorado pelo Git). Coloque seus arquivos `.md` e pastas de imagens (ex: `assets/`) aqui.
+- `output/`: Diretório onde os arquivos PDF convertidos são salvos por padrão (ignorado pelo Git).
+
 ## Uso
 
 No diretório raiz do projeto:
 
 ```bash
-./md2pdf/md2pdf.sh caminho/arquivo.md
+./md2pdf.sh workspace/seu_arquivo.md
 ```
 
-Isso gera o PDF no mesmo diretório do `.md`, com o mesmo nome.
+Isso gerará o PDF na pasta `output/`, com o mesmo nome do arquivo original (ex: `output/seu_arquivo.pdf`).
 
-Para definir saída customizada:
+Você também pode passar a flag `--avoid-table-page-break` se quiser que o script tente manter tabelas e títulos sempre unidos na mesma página (inserindo quebras automáticas):
 
 ```bash
-./md2pdf/md2pdf.sh caminho/arquivo.md caminho/saida.pdf
+./md2pdf.sh --avoid-table-page-break workspace/seu_arquivo.md
+```
+
+Para definir uma saída customizada (ignorando a pasta `output/`):
+
+```bash
+./md2pdf.sh workspace/seu_arquivo.md outro_diretorio/saida_customizada.pdf
 ```
 
 ## Exemplo
 
 ```bash
-./md2pdf/md2pdf.sh planning/infrastructure-migration/requisitos/requisitos-migracao-infraestrutura.md
+./md2pdf.sh workspace/test.md
 ```
 
 ## Personalização de estilo
 
-Edite `md2pdf/vscode-preview.css` para ajustar fonte, margens, tamanhos e cores.
+Edite `vscode-preview.css` para ajustar fonte, margens, tamanhos e cores.
 
 ## Observações
 
+- Imagens locais no Markdown (ex: `![Logo](assets/logo.png)`) são suportadas e serão embutidas automaticamente no PDF final.
 - O script remove cabeçalho/rodapé padrão de impressão do navegador.
 - Se o `google-chrome` não estiver no `PATH`, ajuste o comando no `md2pdf.sh`.

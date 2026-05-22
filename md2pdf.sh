@@ -2,12 +2,43 @@
 set -euo pipefail
 
 usage() {
-  echo "Uso: $0 <arquivo.md> [saida.pdf]"
+  echo "Uso: $0 [opcoes] <arquivo.md> [saida.pdf]"
+  echo "Opcoes:"
+  echo "  --avoid-table-page-break   Evita que tabelas e titulos sejam divididos entre paginas"
   echo "Exemplo:"
-  echo "  $0 requisitos-migracao-infraestrutura.md"
+  echo "  $0 --avoid-table-page-break requisitos-migracao-infraestrutura.md"
 }
 
-if [ "${1:-}" = "" ]; then
+AVOID_BREAK=0
+INPUT_MD=""
+OUTPUT_PDF=""
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --avoid-table-page-break)
+      AVOID_BREAK=1
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      if [ -z "$INPUT_MD" ]; then
+        INPUT_MD="$1"
+      elif [ -z "$OUTPUT_PDF" ]; then
+        OUTPUT_PDF="$1"
+      else
+        echo "Erro: Argumento invalido: $1"
+        usage
+        exit 1
+      fi
+      shift
+      ;;
+  esac
+done
+
+if [ -z "$INPUT_MD" ]; then
   usage
   exit 1
 fi
@@ -24,21 +55,19 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CSS_FILE="$SCRIPT_DIR/vscode-preview.css"
-INPUT_MD="$1"
 
 if [ ! -f "$INPUT_MD" ]; then
   INPUT_MD="$SCRIPT_DIR/$INPUT_MD"
 fi
 
 if [ ! -f "$INPUT_MD" ]; then
-  echo "Erro: arquivo markdown nao encontrado: $1"
+  echo "Erro: arquivo markdown nao encontrado: $INPUT_MD"
   exit 1
 fi
 
-if [ "${2:-}" = "" ]; then
-  OUTPUT_PDF="${INPUT_MD%.md}.pdf"
-else
-  OUTPUT_PDF="$2"
+if [ -z "$OUTPUT_PDF" ]; then
+  BASENAME="$(basename "${INPUT_MD}")"
+  OUTPUT_PDF="$SCRIPT_DIR/output/${BASENAME%.md}.pdf"
 fi
 
 if [ ! -f "$CSS_FILE" ]; then
@@ -46,19 +75,29 @@ if [ ! -f "$CSS_FILE" ]; then
   exit 1
 fi
 
+PANDOC_ARGS=(
+  "--from=gfm"
+  "--to=html5"
+  "--standalone"
+  "--embed-resources"
+  "--resource-path=$(dirname "$INPUT_MD")"
+  "--metadata" "title=$(basename "${INPUT_MD%.md}")"
+  "--css" "$CSS_FILE"
+)
+
+if [ "$AVOID_BREAK" -eq 1 ]; then
+  AVOID_CSS="$SCRIPT_DIR/avoid-page-break.css"
+  if [ -f "$AVOID_CSS" ]; then
+    PANDOC_ARGS+=("--css" "$AVOID_CSS")
+  fi
+fi
+
 mkdir -p "$(dirname "$OUTPUT_PDF")"
 
 TMP_HTML="$(mktemp "${TMPDIR:-/tmp}/md2pdf-vscode.XXXXXX.html")"
 trap 'rm -f "$TMP_HTML"' EXIT
-DOC_TITLE="$(basename "${INPUT_MD%.md}")"
 
-pandoc "$INPUT_MD" \
-  --from=gfm \
-  --to=html5 \
-  --standalone \
-  --metadata "title=$DOC_TITLE" \
-  --css "$CSS_FILE" \
-  --output "$TMP_HTML"
+pandoc "$INPUT_MD" "${PANDOC_ARGS[@]}" --output "$TMP_HTML"
 
 HTML_URI="file://$(realpath "$TMP_HTML")"
 OUTPUT_ABS="$(realpath -m "$OUTPUT_PDF")"
