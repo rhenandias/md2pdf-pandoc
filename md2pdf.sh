@@ -66,8 +66,17 @@ if [ ! -f "$INPUT_MD" ]; then
 fi
 
 if [ -z "$OUTPUT_PDF" ]; then
+  ABS_INPUT="$(realpath "$INPUT_MD")"
+  WORKSPACE_DIR="$(realpath -m "$SCRIPT_DIR/workspace")"
   BASENAME="$(basename "${INPUT_MD}")"
-  OUTPUT_PDF="$SCRIPT_DIR/output/${BASENAME%.md}.pdf"
+
+  if [[ "$ABS_INPUT" == "$WORKSPACE_DIR"/* ]]; then
+    REL_PATH="${ABS_INPUT#$WORKSPACE_DIR/}"
+    WORKSPACE_NAME="$(echo "$REL_PATH" | cut -d'/' -f1)"
+    OUTPUT_PDF="$SCRIPT_DIR/output/$WORKSPACE_NAME/${BASENAME%.md}.pdf"
+  else
+    OUTPUT_PDF="$SCRIPT_DIR/output/${BASENAME%.md}.pdf"
+  fi
 fi
 
 if [ ! -f "$CSS_FILE" ]; then
