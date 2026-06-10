@@ -6,9 +6,14 @@ h3 {
 
 table {
   page-break-inside: avoid;
+  font-size: 0.85em !important;
 }
 
 tr {
   page-break-inside: avoid;
   page-break-after: auto;
+}
+
+th, td {
+  padding: 4px 6px !important;
 }
