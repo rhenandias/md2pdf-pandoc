@@ -23,6 +23,7 @@ Observação: neste projeto, o PDF é gerado com `pandoc + google-chrome --headl
 ## Estrutura de Diretórios
 
 - `workspace/`: Diretório de trabalho (ignorado pelo Git). Coloque seus arquivos `.md` e pastas de imagens (ex: `assets/`) aqui.
+  - `workspace/exemplos/`: Pasta contendo arquivos Markdown de exemplo que servem como suíte de demonstração/teste (esta pasta não é ignorada pelo Git).
 - `output/`: Diretório onde os arquivos PDF convertidos são salvos por padrão (ignorado pelo Git).
 
 ## Uso
@@ -49,8 +50,10 @@ Para definir uma saída customizada (ignorando a pasta `output/`):
 
 ## Exemplo
 
+Para executar a suíte de exemplo e demonstração (contendo todos os elementos da sintaxe Markdown básica e estendida):
+
 ```bash
-./md2pdf.sh workspace/test.md
+./md2pdf.sh workspace/exemplos/markdown-cheat-sheet.md
 ```
 
 ## Personalização de estilo

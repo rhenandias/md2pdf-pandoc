@@ -47,12 +47,24 @@ h3 {
 
 p,
 ul,
-ol {
+ol,
+dl {
   margin: 0.6em 0;
 }
 
 li + li {
   margin-top: 0.2em;
+}
+
+dt {
+  font-weight: 600;
+  margin-top: 0.8em;
+}
+
+dd {
+  margin-left: 20px;
+  margin-bottom: 0.8em;
+  color: #4b5563;
 }
 
 pre,

@@ -85,7 +85,7 @@ if [ ! -f "$CSS_FILE" ]; then
 fi
 
 PANDOC_ARGS=(
-  "--from=gfm"
+  "--from=markdown+mark+emoji"
   "--to=html5"
   "--standalone"
   "--embed-resources"
