@@ -85,13 +85,14 @@ if [ ! -f "$CSS_FILE" ]; then
 fi
 
 PANDOC_ARGS=(
-  "--from=markdown+mark+emoji"
+  "--from=markdown+mark+emoji-implicit_figures"
   "--to=html5"
   "--standalone"
   "--embed-resources"
   "--resource-path=$(dirname "$INPUT_MD")"
   "--metadata" "title=$(basename "${INPUT_MD%.md}")"
   "--css" "$CSS_FILE"
+  "--mathml"
 )
 
 if [ "$AVOID_BREAK" -eq 1 ]; then
