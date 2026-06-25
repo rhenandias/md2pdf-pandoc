@@ -108,6 +108,12 @@ table {
   font-size: 0.95em;
 }
 
+/* Força o navegador a calcular a largura baseado no conteúdo, 
+   ignorando as larguras de <col> injetadas pelo Pandoc */
+table col {
+  width: auto !important;
+}
+
 th,
 td {
   border: 1px solid #d0d7de;
