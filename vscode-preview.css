@@ -140,3 +140,10 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+@media print {
+  pre > code.sourceCode > span {
+    text-indent: 0 !important;
+    padding-left: 0 !important;
+  }
+}

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>relatorio-incidente</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+  <style type="text/css">@page {
+size: A4;
+margin: 18mm 16mm;
+}
+* {
+box-sizing: border-box;
+}
+body {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", sans-serif;
+font-size: 14px;
+line-height: 1.6;
+color: #24292f;
+max-width: 920px;
+margin: 0 auto;
+padding: 10px 4px;
+}
+.title,
+.subtitle,
+.author,
+.date {
+display: none;
+}
+h1,
+h2 {
+border-bottom: 1px solid #d0d7de;
+padding-bottom: 0.3em;
+}
+h1 {
+font-size: 2em;
+margin: 0 0 0.8em;
+}
+h2 {
+font-size: 1.5em;
+margin-top: 1.3em;
+}
+h3 {
+font-size: 1.25em;
+margin-top: 1.1em;
+}
+p,
+ul,
+ol,
+dl {
+margin: 0.6em 0;
+}
+li + li {
+margin-top: 0.2em;
+}
+dt {
+font-weight: 600;
+margin-top: 0.8em;
+}
+dd {
+margin-left: 20px;
+margin-bottom: 0.8em;
+color: #4b5563;
+}
+pre,
+code,
+kbd,
+samp {
+font-family: Consolas, "Courier New", monospace;
+}
+code {
+background: #f6f8fa;
+border-radius: 6px;
+padding: 0.15em 0.4em;
+font-size: 0.92em;
+}
+pre {
+background: #f6f8fa;
+border-radius: 8px;
+border: 1px solid #d0d7de;
+padding: 12px;
+overflow-x: auto;
+}
+pre code {
+background: transparent;
+padding: 0;
+}
+blockquote {
+margin: 0.8em 0;
+border-left: 4px solid #d0d7de;
+padding: 0.1em 1em;
+color: #57606a;
+}
+table {
+border-collapse: collapse;
+width: 100%;
+margin: 0.8em 0;
+font-size: 0.95em;
+}
+
+table col {
+width: auto !important;
+}
+th,
+td {
+border: 1px solid #d0d7de;
+padding: 6px 10px;
+text-align: left;
+}
+th {
+background: #f6f8fa;
+}
+a {
+color: #0969da;
+text-decoration: none;
+}
+hr {
+border: 0;
+border-top: 1px solid #d0d7de;
+margin: 1.2em 0;
+}
+img {
+max-width: 100%;
+height: auto;
+}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">relatorio-incidente</h1>
+</header>
+<h1 id="incidente-incompatibilidade-da-api-do-docker">Incidente:
+Incompatibilidade da API do Docker</h1>
+<h2 id="resumo-do-incidente">1. Resumo do Incidente</h2>
+<p>Após um período de operação contínua de mais de 200 dias (uptime), o
+servidor EC2 foi reiniciado. Imediatamente após a reinicialização, dois
+problemas críticos foram observados:</p>
+<ul>
+<li>O painel do <strong>Portainer</strong> marcava o ambiente local
+(Environment) como “Down”, impossibilitando o gerenciamento dos
+containers.</li>
+<li>As APIs hospedadas, como a API do ERP Limpeza
+(limpezaca-api.asisto.com.br), passaram a retornar o erro <strong>HTTP
+404 Not Found</strong>, indicando que o proxy reverso estava inoperante
+ou incapaz de rotear o tráfego.</li>
+</ul>
+<p><img src="assets/downtime.png" alt="Evidência do período de downtime (Uptime Kuma)" /> <em>Este gráfico
+exibe o monitoramento de tempo de resposta da API Limpezaca no dia 26 de
+Junho.</em></p>
+<h2 id="causa-raiz">2. Causa Raiz</h2>
+<p>Durante os mais de 200 dias de uptime, serviços em segundo plano do
+sistema operacional (Linux) realizaram atualizações de pacotes,
+incluindo o <strong>Docker Engine</strong> (que foi atualizado para a
+versão 29.1.3). No entanto, o serviço do Docker não havia sido
+reiniciado para aplicar essas atualizações.</p>
+<p>Com a reinicialização da máquina, a nova versão do Docker entrou em
+vigor. A partir da versão 29.0, o Docker introduziu uma mudança
+estrutural que alterou a versão mínima suportada de sua API local para a
+versão <strong>1.44</strong>.</p>
+<p>Isso gerou uma quebra de compatibilidade em cascata:</p>
+<ul>
+<li><strong>Docker vs Portainer:</strong> O cliente interno do Portainer
+tentava se comunicar usando a API versão <strong>1.41</strong>.</li>
+<li><strong>Docker vs Traefik:</strong> O Traefik, responsável por
+rotear os domínios (reverse proxy), tentava se comunicar usando uma API
+ainda mais antiga, a versão <strong>1.24</strong> (comum como padrão de
+retrocompatibilidade em clientes Go).</li>
+</ul>
+<p>Como ambas as versões (1.41 e 1.24) eram inferiores ao novo mínimo
+exigido pelo Docker (1.44), o Docker bloqueou a comunicação de ambas as
+ferramentas, causando a queda do ambiente.</p>
+<h2 id="evidências-e-diagnóstico">3. Evidências e Diagnóstico</h2>
+<h3 id="diagnóstico-do-portainer">Diagnóstico do Portainer</h3>
+<p>Foi executado um teste de comunicação com o socket do Docker
+simulando a versão exigida pelo Portainer:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--unix-socket</span> /var/run/docker.sock http://localhost/v1.41/version</span></code></pre></div>
+<p><strong>Retorno:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;client version 1.41 is too old. Minimum supported API version is 1.44, please upgrade your client to a newer version&quot;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="diagnóstico-do-traefik">Diagnóstico do Traefik</h3>
+<p>Para entender o erro 404 da API, foram analisados os logs do
+container do Traefik:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> logs traefik-traefik-1 <span class="at">--tail</span> 50</span></code></pre></div>
+<p><strong>Retorno:</strong></p>
+<pre class="text"><code>Error response from daemon: client version 1.24 is too old. Minimum supported API version is 1.41</code></pre>
+<h2 id="solução-aplicada">4. Solução Aplicada</h2>
+<p>Para restabelecer os serviços rapidamente, foi aplicada uma
+configuração manual no Docker para forçá-lo a aceitar conexões de APIs
+antigas, englobando as necessidades de ambas as ferramentas.</p>
+<ul>
+<li><strong>Caminho do arquivo criado:</strong>
+<code>/etc/docker/daemon.json</code></li>
+<li><strong>Conteúdo atual do arquivo:</strong></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;min-api-version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.24&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Após a criação do arquivo, o serviço do Docker foi reiniciado
+(<code>sudo systemctl restart docker</code>). Com a versão mínima
+ajustada para 1.24, tanto o Traefik quanto o Portainer conseguiram se
+reconectar ao socket do Docker, e os sistemas voltaram a ficar “Up” e
+“Healthy”.</p>
+<h2 id="snapshot-de-segurança-aws">5. Snapshot de Segurança (AWS)</h2>
+<p>Antes de iniciar as investigações e intervenções no sistema de
+arquivos, um snapshot de segurança do volume EBS foi criado na AWS para
+garantir o estado da máquina.</p>
+<ul>
+<li><strong>SnapshotId:</strong> snap-0275bc21abe4c912f</li>
+<li><strong>VolumeId:</strong> vol-03238eb4b1499d988</li>
+<li><strong>InstanceId:</strong> i-03408d7f51ee90ed9 (Região:
+us-east-2)</li>
+<li><strong>Tag (Name):</strong> portainer-pre-upgrade-2026-06-26</li>
+<li><strong>Status:</strong> completed</li>
+<li><strong>Data/Hora Início:</strong>
+2026-06-26T12:44:11.905000+00:00</li>
+</ul>
+<h2 id="próximos-passos-e-recomendações">6. Próximos Passos e
+Recomendações</h2>
+<p>A solução aplicada é temporária e focada na rápida mitigação do
+incidente. Manter o Docker forçado a suportar APIs desatualizadas
+(<code>1.24</code>) pode impedir o uso de novos recursos e mascarar a
+defasagem das ferramentas da infraestrutura.</p>
+<p><strong>Ação Recomendada:</strong> Planejar a atualização estrutural
+dos containers do Traefik e Portainer para as versões mais recentes que
+já utilizem clientes atualizados com suporte à API Docker &gt;= 1.44.
+Após a validação dessas atualizações, a configuração manual inserida no
+<code>daemon.json</code> deverá ser removida, restaurando a segurança e
+o padrão arquitetural do servidor.</p>
+</body>
+</html>
